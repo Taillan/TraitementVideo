@@ -1,0 +1,3 @@
+/home/kali/Documents/TraitementVideo/TD1/CMakeFiles/exple.dir
+/home/kali/Documents/TraitementVideo/TD1/CMakeFiles/edit_cache.dir
+/home/kali/Documents/TraitementVideo/TD1/CMakeFiles/rebuild_cache.dir
