@@ -7,6 +7,7 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <string>
+#include <math.h>
 
 
 #ifndef DATA_FOLDER
@@ -39,14 +40,34 @@ int main() {
 
   img= cv::imread(filename, cv::IMREAD_COLOR/*IMREAD_GRAYSCALE*/);
   cv::Mat imgGRAY;
+  cv::Mat imgFiltred;
+  std::vector<cv::Vec3f>circles;
+  
   if(img.empty()) {
     std::cout << "Cannot load image \"" << filename << "\"!" << std::endl;
     res = -1;
   } else {
     cv::namedWindow("image", cv::WINDOW_AUTOSIZE);
+    cv::namedWindow("circle", cv::WINDOW_AUTOSIZE);
     cv::createTrackbar( "contrast", "image", &Alpha, 100, on_trackbar );
     cv::createTrackbar( "Luminosite", "image", &Beta, 100, on_trackbar );
     cv::imshow("image", img);
+
+    cv::cvtColor(img,imgGRAY, cv::COLOR_BGR2GRAY);
+    cv::threshold(imgGRAY,imgFiltred,240,255, cv::THRESH_BINARY);  
+    
+    //cv::medianBlur(imgGRAY,imgGRAY,5);
+    cv::HoughCircles(imgGRAY,circles,cv::HOUGH_GRADIENT,1,
+                    imgGRAY.rows/16,
+                    100,30,1,30);
+    
+    for( size_t i = 0; i < circles.size(); i++ ){
+      cv::Vec3i c =circles[i];
+      cv::Point center = cv::Point(c[0],c[1]);
+      int radius = c[2];
+      cv::circle( img, center, radius, cv::Scalar(255,0,255), 3, cv::LINE_AA);
+    }
+    cv::imshow("circle", img);
     cv::waitKey(0);
 
   }
