@@ -1,5 +1,9 @@
 /data
-.cmake
+*.cmake
 CMakeCachhe.txt
 exple
 Makefile
+project/data/choux.mp4
+project/CMakeCache.txt
+CMakeFiles/
+.vscode/settings.json
