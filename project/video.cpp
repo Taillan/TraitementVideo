@@ -13,8 +13,7 @@
 int main() {
 
     cv::Mat frame;
-  	const std::string filename(DATA_FOLDER "choux.mp4");
-	cv::VideoCapture cap("data/choux.mp4");
+	cv::VideoCapture cap("./data/choux.mp4");
     bool playVideo = true;
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
@@ -37,7 +36,7 @@ int main() {
         cv::Mat hsv, mask, out;
         cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
         cv::inRange(hsv, cv::Scalar(40, 40, 40), cv::Scalar(70, 255, 255), mask);
-        cv::bitwise_or(frame, mask, out);
+        cv::bitwise_and( frame, frame, out, mask );
         cv::imshow("Frame", frame);
         cv::imshow("Hsv", hsv);
         cv::imshow("Mask", mask);
