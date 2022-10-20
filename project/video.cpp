@@ -15,7 +15,7 @@ int main() {
     cv::Mat frame;
   	const std::string filename(DATA_FOLDER "choux.mp4");
 	cv::VideoCapture cap("data/choux.mp4");
-
+    bool playVideo = true;
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
@@ -24,16 +24,29 @@ int main() {
     for (;;)
     {
         // wait for a new frame from camera and store it into 'frame'
-        cap >> frame;
+        
+        if(playVideo)
+            cap >> frame;
+
         // check if we succeeded
         if (frame.empty()) {
             std::cerr << "ERROR! blank frame grabbed\n";
             break;
         }
         // show live and wait for a key with timeout long enough to show images
+        cv::Mat hsv, mask, out;
+        cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
+        cv::inRange(hsv, cv::Scalar(40, 40, 40), cv::Scalar(70, 255, 255), mask);
+        cv::bitwise_or(frame, mask, out);
         cv::imshow("Frame", frame);
-        if (cv::waitKey(5) >= 0)
+        cv::imshow("Hsv", hsv);
+        cv::imshow("Mask", mask);
+        cv::imshow("Output", out);
+        char key = cv::waitKey(1);
+        if (key == 27)
             break;
+        if (key == 'p')
+            playVideo = !playVideo;
     }
 	cap.release();
  
