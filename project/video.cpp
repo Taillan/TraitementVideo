@@ -35,7 +35,7 @@ int main() {
         // show live and wait for a key with timeout long enough to show images
         cv::Mat hsv, mask, out;
         cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
-        cv::inRange(hsv, cv::Scalar(40, 40, 40), cv::Scalar(70, 255, 255), mask);
+        cv::inRange(hsv, cv::Scalar(36, 25, 25), cv::Scalar(50, 255, 255), mask);
         cv::bitwise_and( frame, frame, out, mask );
         cv::imshow("Frame", frame);
         cv::imshow("Hsv", hsv);
@@ -46,6 +46,8 @@ int main() {
             break;
         if (key == 'p')
             playVideo = !playVideo;
+        if (key == 'q')
+            break;
     }
 	cap.release();
  
