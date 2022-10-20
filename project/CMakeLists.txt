@@ -67,6 +67,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # =============================================================================
 # Targets
 # =============================================================================
-add_executable(exple exple.cpp)
-target_compile_definitions(exple PRIVATE DATA_FOLDER="/home/warameur/Documents/ESIEE/TraitementVideo/data/opencv_data/")
-target_link_libraries(exple ${EXTRA_LIBS})
+add_executable(video video.cpp)
+target_compile_definitions(video PRIVATE DATA_FOLDER="/home/warameur/Documents/ESIEE/TraitementVideo/data/opencv_data/")
+target_link_libraries(video ${EXTRA_LIBS})
