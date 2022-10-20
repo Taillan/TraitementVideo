@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/warameur/Documents/ESIEE/TraitementVideo/TD2/build",
+  "command": "/usr/bin/g++ -DDATA_FOLDER=\\\"/home/warameur/Documents/ESIEE/TraitementVideo/data/opencv_data/\\\" -isystem /nfs/opt/bdr/OpenCV/include/opencv4 -g -fopenmp -std=c++14 -o CMakeFiles/exple.dir/exple.cpp.o -c /home/warameur/Documents/ESIEE/TraitementVideo/TD2/exple.cpp",
+  "file": "/home/warameur/Documents/ESIEE/TraitementVideo/TD2/exple.cpp"
+}
+]
