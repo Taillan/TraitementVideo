@@ -15,6 +15,7 @@ int main() {
     cv::Mat frame;
 	cv::VideoCapture cap("./data/choux.mp4");
     bool playVideo = true;
+    char mode = 'o';
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
@@ -37,17 +38,57 @@ int main() {
         cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
         cv::inRange(hsv, cv::Scalar(36, 25, 25), cv::Scalar(50, 255, 255), mask);
         cv::bitwise_and( frame, frame, out, mask );
-        cv::imshow("Frame", frame);
-        cv::imshow("Hsv", hsv);
-        cv::imshow("Mask", mask);
-        cv::imshow("Output", out);
+
+         switch(mode)
+        {
+            case 'b':
+                cv::imshow("Frame", frame);
+                std::cout << "Frame :"<< mode <<"\n";
+                break;
+            case 'm':
+                cv::imshow("Frame", mask);
+                std::cout << "Frame :"<< mode <<"\n";
+                break;
+            case 'h':
+                cv::imshow("Frame", hsv);
+                std::cout << "Frame :"<< mode <<"\n";
+                break;
+            case 'o':
+                cv::imshow("Frame", out);
+                std::cout << "Frame :"<< mode <<"\n";
+                break;
+            default:
+                break;
+        }
+
         char key = cv::waitKey(1);
         if (key == 27)
             break;
-        if (key == 'p')
+        if (key == 'p'){
             playVideo = !playVideo;
+            if(playVideo)
+                std::cout << "Pause <- off\n";
+            else
+                std::cout << "Pause <- on\n";
+            }
         if (key == 'q')
             break;
+        if (key == 'm'){
+            mode = 'm';
+            std::cout << "Mode :"<< mode <<"\n";
+            }
+        if (key == 'o'){
+            mode = 'o';
+            std::cout << "Mode :"<< mode <<"\n";
+            }
+        if (key == 'h'){
+            mode = 'h';
+            std::cout << "Mode :"<< mode <<"\n";
+            }
+        if (key == 'b'){
+            mode = 'b';
+            std::cout << "Mode :"<< mode <<"\n";
+            }
     }
 	cap.release();
  
