@@ -15,16 +15,26 @@ int main() {
     cv::Mat frame;
 	cv::VideoCapture cap("./data/choux.mp4");
     bool playVideo = true;
-    char mode = 'o';
+    char mode = 'b';
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
-
+    int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
+    int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+    cv::VideoWriter video;
+    
     for (;;)
     {
         // wait for a new frame from camera and store it into 'frame'
         
+        if(!video.isOpened()){
+            video.open("out.avi",cv::VideoWriter::fourcc('x','v','i','d'),60, cv::Size(frame_width,frame_height));
+            if(!video.isOpened()){
+                std::cerr << "ERROR! can't create video writer\n";
+                break;
+            }
+        }
         if(playVideo)
             cap >> frame;
 
@@ -37,25 +47,26 @@ int main() {
         cv::Mat hsv, mask, out;
         cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
         cv::inRange(hsv, cv::Scalar(36, 25, 25), cv::Scalar(50, 255, 255), mask);
-        cv::bitwise_and( frame, frame, out, mask );
+        //cv::addWeighted(mask,1,frame,1,0, out);
+        cv::bitwise_or( frame, frame, out, mask );
 
          switch(mode)
         {
             case 'b':
                 cv::imshow("Frame", frame);
-                std::cout << "Frame :"<< mode <<"\n";
+                video.write(frame);
                 break;
             case 'm':
                 cv::imshow("Frame", mask);
-                std::cout << "Frame :"<< mode <<"\n";
+                video.write(mask);
                 break;
             case 'h':
                 cv::imshow("Frame", hsv);
-                std::cout << "Frame :"<< mode <<"\n";
+                video.write(hsv);
                 break;
             case 'o':
                 cv::imshow("Frame", out);
-                std::cout << "Frame :"<< mode <<"\n";
+                video.write(out);
                 break;
             default:
                 break;
@@ -91,6 +102,7 @@ int main() {
             }
     }
 	cap.release();
+	video.release();
  
   // Closes all the frames
   	cv::destroyAllWindows();
