@@ -24,12 +24,16 @@ int main() {
     int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     cv::VideoWriter video;
     
+
+    std::cout << "Commande : \n b : mode de base\n p : pause\n m : afficher le mask\n h : afficher l'image en HSV\n";
+    std::cout << " o : afficher les choux fleur une foi filtré\n q : quiter \n\n";
+
     for (;;)
     {
         // wait for a new frame from camera and store it into 'frame'
         
         if(!video.isOpened()){
-            video.open("out.avi",cv::VideoWriter::fourcc('x','v','i','d'),60, cv::Size(frame_width,frame_height));
+            video.open("out.mp4v",cv::VideoWriter::fourcc('x','v','i','d'),60, cv::Size(frame_width,frame_height));
             if(!video.isOpened()){
                 std::cerr << "ERROR! can't create video writer\n";
                 break;
