@@ -76,7 +76,7 @@ int main() {
                 break;
         }
 
-        char key = cv::waitKey(1);
+        char key = cv::waitKey(33);
         if (key == 27)
             break;
         if (key == 'p'){

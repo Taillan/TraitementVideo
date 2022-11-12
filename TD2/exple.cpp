@@ -48,11 +48,11 @@ int main() {
     std::cout << "Cannot load image \"" << filename << "\"!" << std::endl;
     res = -1;
   } else {
-    cv::namedWindow("image", cv::WINDOW_AUTOSIZE);
+    //cv::namedWindow("image", cv::WINDOW_AUTOSIZE);
     cv::namedWindow("circle", cv::WINDOW_AUTOSIZE);
-    cv::createTrackbar( "contrast", "image", &Alpha, 100, on_trackbar );
-    cv::createTrackbar( "Luminosite", "image", &Beta, 100, on_trackbar );
-    cv::imshow("image", img);
+    //cv::createTrackbar( "contrast", "image", &Alpha, 100, on_trackbar );
+    //cv::createTrackbar( "Luminosite", "image", &Beta, 100, on_trackbar );
+    //cv::imshow("image", img);
 
     cv::cvtColor(img,imgGRAY, cv::COLOR_BGR2GRAY);
     cv::threshold(imgGRAY,imgFiltred,240,255, cv::THRESH_BINARY);  
