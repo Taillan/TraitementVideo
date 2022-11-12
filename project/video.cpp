@@ -33,7 +33,7 @@ int main() {
         // wait for a new frame from camera and store it into 'frame'
         
         if(!video.isOpened()){
-            video.open("out.mp4v",cv::VideoWriter::fourcc('x','v','i','d'),60, cv::Size(frame_width,frame_height));
+            video.open("out.avi",cv::VideoWriter::fourcc('x','v','i','d'),60, cv::Size(frame_width,frame_height));
             if(!video.isOpened()){
                 std::cerr << "ERROR! can't create video writer\n";
                 break;
