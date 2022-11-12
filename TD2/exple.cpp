@@ -36,7 +36,7 @@ static void on_trackbar( int, void* userdata )
 
 int main() {
   int res(0);
-  const std::string filename(DATA_FOLDER "smarties.jpg");
+  const std::string filename("../data/opencv_data/smarties.jpg");
 
   int font = cv::FONT_HERSHEY_SIMPLEX;
   img= cv::imread(filename, cv::IMREAD_COLOR/*IMREAD_GRAYSCALE*/);
