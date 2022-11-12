@@ -101,11 +101,14 @@ int main() {
             std::cout << "Mode :"<< mode <<"\n";
             }
     }
-	cap.release();
-	video.release();
  
+	cap.release();
+    std::cout << "INFO Realease cap\n";
+	video.release();
+    std::cout << "INFO Realease video\n";
   // Closes all the frames
   	cv::destroyAllWindows();
+    std::cout << "INFO Destroy all windows\n";
 	//quiter le programme et fermer toutes les fenêtres ouvertes
 	return 0;
 }
