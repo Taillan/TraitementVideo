@@ -14,15 +14,18 @@ int main() {
 
     cv::Mat frame;
 	cv::VideoCapture cap("./data/choux.mp4");
-    bool playVideo = true;
-    char mode = 'b';
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
+
+    cv::VideoWriter video;
+    bool playVideo = true;
+    char mode = 'b';
     int frame_width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int frame_height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-    cv::VideoWriter video;
+    int frame_count = cap.get(cv::CAP_PROP_FRAME_COUNT);
+
     
 
     std::cout << "Commande : \n b : mode de base\n p : pause\n m : afficher le mask\n h : afficher l'image en HSV\n";
@@ -30,28 +33,36 @@ int main() {
 
     for (;;)
     {
-        // wait for a new frame from camera and store it into 'frame'
-        
+        //Ouverture du fichier video d'output
         if(!video.isOpened()){
-            video.open("out.avi",cv::VideoWriter::fourcc('x','v','i','d'),60, cv::Size(frame_width,frame_height));
+            video.open("out.avi",cv::VideoWriter::fourcc('M', 'J', 'P', 'G'),60, cv::Size(frame_width,frame_height));
             if(!video.isOpened()){
+                //si celuio ci ne souvre pas correctement c'est une erreur
                 std::cerr << "ERROR! can't create video writer\n";
                 break;
             }
         }
-        if(playVideo)
+        // si la vidéo n'est pas en pause on lit la frame suivante
+        if(playVideo){
             cap >> frame;
+        }
 
-        // check if we succeeded
+        //si cette frame est vide alors la video est soit fini soit cest une erreur donc on coupe la boucle
         if (frame.empty()) {
+            std::cerr << "frame_count : "<<frame_count<< " frame_number : "<<cap.get(cv::CAP_PROP_POS_FRAMES)<<std::endl;
+            if(frame_count == cap.get(cv::CAP_PROP_POS_FRAMES)){
+                break;
+            }
             std::cerr << "ERROR! blank frame grabbed\n";
             break;
         }
-        // show live and wait for a key with timeout long enough to show images
+
         cv::Mat hsv, mask, out;
+        // convertion de l'image en HSV pour pouvoir appliquer un filtre plus efficace
         cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
+        //conservation des pixel compris dans le range [HSV(35,25,25),HSV(50,255,255)]  
         cv::inRange(hsv, cv::Scalar(36, 25, 25), cv::Scalar(50, 255, 255), mask);
-        //cv::addWeighted(mask,1,frame,1,0, out);
+        //Application d'un or pour ne garder les pixel que des choux avec leur couleur dorigine
         cv::bitwise_or( frame, frame, out, mask );
 
          switch(mode)
