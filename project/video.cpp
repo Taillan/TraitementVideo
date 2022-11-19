@@ -10,10 +10,10 @@
 #define DATA_FOLDER
 #endif
 
-int main() {
+int main(int argc,char * argv[]) {
 
     cv::Mat frame;
-	cv::VideoCapture cap("./data/choux.mp4");
+	cv::VideoCapture cap(argv[1]);
     if (!cap.isOpened()) {
         std::cerr << "ERROR! Unable to open camera\n";
         return -1;
