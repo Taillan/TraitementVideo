@@ -68,5 +68,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Targets
 # =============================================================================
 add_executable(video video.cpp)
-target_compile_definitions(video PRIVATE DATA_FOLDER="/home/warameur/Documents/ESIEE/TraitementVideo/data/opencv_data/")
+add_executable(stegano stegano.cpp)
+target_compile_definitions(video PRIVATE DATA_FOLDER="./data/")
+target_compile_definitions(stegano PRIVATE DATA_FOLDER="./data/")
 target_link_libraries(video ${EXTRA_LIBS})
+target_link_libraries(stegano ${EXTRA_LIBS})
+
